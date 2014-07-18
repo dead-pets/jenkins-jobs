@@ -1,0 +1,29 @@
+- job:
+    name: fuel-artifacts-5.0.x
+    logrotate:
+      daysToKeep: 10
+      numToKeep: 10
+      artifactDaysToKeep: -1
+      artifactNumToKeep: -1
+    scm:
+      - git:
+          url: https://github.com/stackforge/fuel-main.git
+          branches:
+            - stable/5.0
+          skip-tag: true
+          wipe-workspace: false
+    builders:
+      - shell: |
+          git review -x 107730
+          rm -rf artifacts
+          make deep_clean
+          make ART_DIR=artifacts USE_MIRROR=msk artifacts
+    publishers:
+      - archive:
+          artifacts: artifacts/*
+    triggers:
+      - timed: H H(3-5) * * 1-5
+    wrappers:
+      - timeout:
+          timeout: 90
+          fail: true
