@@ -1,0 +1,36 @@
+- job:
+    name: fuel-all-master
+    logrotate:
+      daysToKeep: 10
+      numToKeep: 10
+      artifactDaysToKeep: -1
+      artifactNumToKeep: -1
+    scm:
+      - git:
+          url: https://github.com/stackforge/fuel-main.git
+          branches:
+            - master
+          skip-tag: true
+          wipe-workspace: false
+    builders:
+      - copyartifact:
+          project: fuel-artifacts-5.0.x
+          filter: artifacts/*
+          target: objects/5.0.x
+          flatten: true
+      - shell: |
+          git review -x 107730
+          git review -x 107866
+          git review -x 108128
+          rm -rf artifacts
+          make deep_clean
+          make OBJ_DIR=objects ART_DIR=artifacts USE_MIRROR=msk EXTRA_RELEASES=5.0.x TARBALL_DIR=artifacts BUILD_ARTIFACTS=1 ISO_DIR=artifacts iso img openstack-patch upgrade
+    publishers:
+      - archive:
+          artifacts: artifacts/*
+    triggers:
+      - timed: H H(6-7) * * 1-5
+    wrappers:
+      - timeout:
+          timeout: 180
+          fail: true
