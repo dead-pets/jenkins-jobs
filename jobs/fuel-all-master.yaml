@@ -28,6 +28,7 @@
     publishers:
       - archive:
           artifacts: artifacts/*
+          latest-only: true
     triggers:
       - timed: H H(6-7) * * 1-5
     wrappers:
