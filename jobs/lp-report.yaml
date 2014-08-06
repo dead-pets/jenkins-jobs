@@ -19,7 +19,7 @@
           venv/bin/pip install https://launchpad.net/lazr.authentication/trunk/0.1.2/+download/lazr.authentication-0.1.2.tar.gz
           venv/bin/python setup.py install
           mkdir -p artifacts
-          cd artifacts && ../venv/bin/lp-report -t ../launchpad_report/template.html
+          cd artifacts && ../venv/bin/lp-report -t ../launchpad_report/template.html -l report.log
     publishers:
       - archive:
           artifacts: artifacts/*

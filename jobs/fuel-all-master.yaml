@@ -26,7 +26,7 @@
           artifacts: artifacts/fuel-*, artifacts/version.yaml
           latest-only: true
     triggers:
-      - timed: H H(6-7) * * 1-5
+      - timed: #H H(6-7) * * 1-5
     wrappers:
       - timeout:
           timeout: 180
