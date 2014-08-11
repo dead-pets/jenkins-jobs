@@ -1,5 +1,6 @@
 - job:
     name: lp-report
+    description: "<a href=https://docs.google.com/spreadsheets/d/1DAt6ZWtD6abQVzMBGI6VO37lBLOEuB0D8g3ryiIruTY/edit?usp=sharing>Google doc with report</a> updated manually from csv report of this job"
     logrotate:
       daysToKeep: 30
       numToKeep: 100
@@ -19,7 +20,7 @@
           venv/bin/pip install https://launchpad.net/lazr.authentication/trunk/0.1.2/+download/lazr.authentication-0.1.2.tar.gz
           venv/bin/python setup.py install
           mkdir -p artifacts
-          cd artifacts && ../venv/bin/lp-report -t ../launchpad_report/template.html -l report.log
+          cd artifacts && ../venv/bin/lp-report -a --template ../launchpad_report/template.html
     publishers:
       - archive:
           artifacts: artifacts/*
@@ -27,5 +28,5 @@
       - timed: H 9,21 * * 1-5
     wrappers:
       - timeout:
-          timeout: 60
+          timeout: 240
           fail: true
