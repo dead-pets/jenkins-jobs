@@ -14,7 +14,6 @@
           wipe-workspace: false
     builders:
       - shell: |
-          git review -x 109596
           rm -rf artifacts
           make deep_clean
           make DEPS_DIR=objects ARTS_DIR=artifacts USE_MIRROR=msk all centos-repo ubuntu-repo puppet openstack-yaml
