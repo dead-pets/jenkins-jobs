@@ -1,0 +1,32 @@
+- job:
+    name: lp-report-dev
+    description: "Build from development version of lp-report: <a href='https://github.com/dmi-try/launchpad-report/tree/dev'>code</a>"
+    logrotate:
+      daysToKeep: 30
+      numToKeep: 100
+      artifactDaysToKeep: -1
+      artifactNumToKeep: -1
+    scm:
+      - git:
+          url: https://github.com/dmi-try/launchpad-report.git
+          branches:
+            - dev
+          skip-tag: true
+          wipe-workspace: false
+    builders:
+      - shell: |
+          rm -rf venv artifacts
+          virtualenv venv
+          venv/bin/pip install https://launchpad.net/lazr.authentication/trunk/0.1.2/+download/lazr.authentication-0.1.2.tar.gz
+          venv/bin/python setup.py install
+          mkdir -p artifacts
+          cd artifacts && ../venv/bin/lp-report -a --template ../launchpad_report/template.html
+    publishers:
+      - archive:
+          artifacts: artifacts/*
+    triggers:
+      - timed: #H 9,21 * * 1-5
+    wrappers:
+      - timeout:
+          timeout: 240
+          fail: true
