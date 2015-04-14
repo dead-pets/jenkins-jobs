@@ -1,6 +1,6 @@
 - job:
-    name: lp-report-dev
-    description: "Build from development version of lp-report: <a href='https://github.com/dmi-try/launchpad-report/tree/dev'>code</a>"
+    name: lp-report-full
+    description: "<a href=https://docs.google.com/spreadsheets/d/1DAt6ZWtD6abQVzMBGI6VO37lBLOEuB0D8g3ryiIruTY/edit?usp=sharing>Google doc with report</a> updated manually from csv report of this job"
     logrotate:
       daysToKeep: 30
       numToKeep: 100
@@ -10,7 +10,7 @@
       - git:
           url: https://github.com/dmi-try/launchpad-report.git
           branches:
-            - dev
+            - master
           skip-tag: true
           wipe-workspace: false
     builders:
@@ -26,7 +26,7 @@
       - archive:
           artifacts: artifacts/*
     triggers:
-      - timed: H 4 * * 1-5
+      - timed: H 23 * * *
     wrappers:
       - timeout:
           timeout: 720
