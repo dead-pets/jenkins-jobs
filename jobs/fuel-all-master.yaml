@@ -14,13 +14,13 @@
           wipe-workspace: false
     builders:
       - shell: |
-          git review -x 109569
+          git review -x 114201
           rm -rf objects
           mkdir -p objects
           ln -sf ~/workspace/fuel-all-5.0.x/artifacts objects/5.0.x
           rm -rf artifacts
           make deep_clean
-          make DEPS_DIR=objects ARTS_DIR=artifacts UPGRADE_VERSIONS=5.0.x USE_MIRROR=msk all
+          make DEPS_DIR=objects ARTS_DIR=artifacts UPGRADE_VERSIONS=5.0.x USE_MIRROR=msk iso img version-yaml upgrade-lrzip
     publishers:
       - archive:
           artifacts: artifacts/fuel-*, artifacts/version.yaml

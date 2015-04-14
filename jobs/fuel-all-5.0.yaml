@@ -1,5 +1,5 @@
 - job:
-    name: fuel-all-5.0.x
+    name: fuel-all-6.0
     logrotate:
       daysToKeep: 10
       numToKeep: 10
@@ -9,20 +9,19 @@
       - git:
           url: https://github.com/stackforge/fuel-main.git
           branches:
-            - stable/5.0
+            - stable/5.1
           skip-tag: true
           wipe-workspace: false
     builders:
       - shell: |
-          rm -rf artifacts
           make deep_clean
-          make DEPS_DIR=objects ARTS_DIR=artifacts USE_MIRROR=msk all centos-repo ubuntu-repo puppet openstack-yaml version-yaml
+          make DEPS_DIR=objects ARTS_DIR=artifacts USE_MIRROR=msk iso img version-yaml puppet centos-repo ubuntu-repo openstack-yaml
     publishers:
       - archive:
-          artifacts: artifacts/*
+          artifacts: artifacts/fuel-*.iso, artifacts/fuel-*.img, artifacts/fuel-*.tgz, artifacts/version.yaml
           latest-only: true
     triggers:
-      - timed: #H H(3-5) * * 1-5
+      - timed: #H H(6-7) * * 1-5
     wrappers:
       - timeout:
           timeout: 180
