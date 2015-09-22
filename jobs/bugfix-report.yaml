@@ -1,0 +1,30 @@
+- job:
+    name: bugfix-report
+    description: Update Google doc with KPI metrics
+    logrotate:
+      daysToKeep: 30
+      numToKeep: 100
+      artifactDaysToKeep: -1
+      artifactNumToKeep: -1
+    scm:
+      - git:
+          url: https://github.com/adidenko/bugfix-tools.git
+          branches:
+            - master
+          skip-tag: true
+          wipe-workspace: false
+    builders:
+      - shell: |
+          test -f ~/.google_key.p12
+          rm -rf venv
+          virtualenv venv
+          LC_ALL=C venv/bin/pip install gspread pygerrit oauth2client pyOpenSSL pytz launchpadlib ndg-httpsclient pyasn1
+          cp ~/.google_key.p12 .
+          venv/bin/python ./report-to-google-docs.py --milestone 8.0 --start-date 2015-09-16 --login
+          rm .google_key.p12
+    triggers:
+      - timed: H */3 * * 1-5
+    wrappers:
+      - timeout:
+          timeout: 60
+          fail: true
