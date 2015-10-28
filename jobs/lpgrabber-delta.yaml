@@ -1,0 +1,37 @@
+- job:
+    name: lpgrabber-delta
+    description: "Import bugs and teams data from Launchpad"
+    logrotate:
+      daysToKeep: 30
+      numToKeep: 100
+      artifactDaysToKeep: -1
+      artifactNumToKeep: -1
+    scm:
+      - git:
+          url: https://github.com/dmi-try/lpgrabber.git
+          branches:
+            - master
+          skip-tag: true
+          wipe-workspace: false
+    builders:
+      - shell: |
+          file_name=${JOB_NAME}-${BUILD_NUMBER}-$(date '+%Y-%m-%d')
+          from_date=$(date --date="1 day ago" "+%Y-%m-%d")
+          rm -rf artifacts
+          virtualenv venv
+          # venv/bin/pip install https://launchpad.net/lazr.authentication/trunk/0.1.2/+download/lazr.authentication-0.1.2.tar.gz
+          venv/bin/pip install pandas numpy launchpadlib
+          venv/bin/python setup.py install
+          mkdir -p artifacts
+          venv/bin/lpgrabber bugs fuel -v --outfile artifacts/bugs-fuel-${file_name}.csv --updated-since ${from_date}
+          venv/bin/lpgrabber bugs mos -v --outfile artifacts/bugs-mos-${file_name}.csv --updated-since ${from_date}
+          venv/bin/lpgrabber teams fuel mos -v --outfile artifacts/teams-${file_name}.csv
+    publishers:
+      - archive:
+          artifacts: artifacts/*
+    triggers:
+      - timed: H * * * 1-5
+    wrappers:
+      - timeout:
+          timeout: 1440
+          fail: false
