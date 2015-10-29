@@ -29,7 +29,7 @@
       - archive:
           artifacts: artifacts/*
     triggers:
-      - timed: H 9,21 * * 1-5
+      - timed: H 4,16 * * 1-5
     wrappers:
       - timeout:
           timeout: 1440
