@@ -15,10 +15,10 @@
           wipe-workspace: false
     builders:
       - shell: |
+          #!/bin/bash
           . ~/.trello_credentials.sh
           rm -rf artifacts
           virtualenv venv
-          # venv/bin/pip install pandas numpy launchpadlib
           venv/bin/pip install -r requirements.txt
           venv/bin/python setup.py install
           mkdir -p artifacts
@@ -28,28 +28,34 @@
             --filter '{"milestone": "8.0", "assignee": "fuel-python", "tags": ["-area-python", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
             --project mos --project fuel --board 'fuel-python high bugs' -v \
             --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
-            --create-board > artifacts/python-high.log 2> artifacts/python-high-err.log
+            --create-board > artifacts/python-high.log 2> artifacts/python-high-err.log &
 
           venv/bin/lpgrabber trello \
             --filter '{"milestone": "8.0", "tags": ["area-python", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Medium", "Low", "Wishlist"], "tags_combinator":"All"}' \
             --filter '{"milestone": "8.0", "assignee": "fuel-python", "tags": ["-area-python", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Medium", "Low", "Wishlist"], "tags_combinator":"All"}' \
             --project mos --project fuel --board 'fuel-python low bugs' -v \
             --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
-            --create-board > artifacts/python-low.log 2> artifacts/python-low-err.log
+            --create-board > artifacts/python-low.log 2> artifacts/python-low-err.log &
 
           venv/bin/lpgrabber trello \
             --filter '{"milestone": "8.0", "tags": ["area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
             --filter '{"milestone": "8.0", "assignee": "fuel-library", "tags": ["-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
             --project mos --project fuel --board 'fuel-library high bugs' -v \
             --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
-            --create-board > artifacts/library-high.log 2> artifacts/library-high-err.log
+            --create-board > artifacts/library-high.log 2> artifacts/library-high-err.log &
 
           venv/bin/lpgrabber trello \
             --filter '{"milestone": "8.0", "tags": ["area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Medium", "Low", "Wishlist"], "tags_combinator":"All"}' \
             --filter '{"milestone": "8.0", "assignee": "fuel-library", "tags": ["-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Medium", "Low", "Wishlist"], "tags_combinator":"All"}' \
             --project mos --project fuel --board 'fuel-library low bugs' -v \
             --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
-            --create-board > artifacts/library-low.log 2> artifacts/library-low-err.log
+            --create-board > artifacts/library-low.log 2> artifacts/library-low-err.log &
+
+          venv/bin/lpgrabber trello \
+            --filter '{"milestone": "8.0", "tags": ["swarm-blocker"], "tags_combinator":"All"}' \
+            --project mos --project fuel --board 'swarm-blocker bugs' -v \
+            --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
+            --create-board 2> artifacts/swarm.log 2> artifacts/swarm-err.log &
 
           for job in `jobs -p`
           do
