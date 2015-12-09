@@ -19,9 +19,7 @@
           from_date=$(date --date="1 day ago" "+%Y-%m-%d")
           rm -rf artifacts
           virtualenv venv
-          # venv/bin/pip install https://launchpad.net/lazr.authentication/trunk/0.1.2/+download/lazr.authentication-0.1.2.tar.gz
-          venv/bin/pip install pandas numpy launchpadlib
-          venv/bin/python setup.py install
+          venv/bin/pip install .
           mkdir -p artifacts
           venv/bin/lpgrabber bugs fuel -v --outfile artifacts/bugs-fuel-${file_name}.csv --updated-since ${from_date}
           venv/bin/lpgrabber bugs mos -v --outfile artifacts/bugs-mos-${file_name}.csv --updated-since ${from_date}
