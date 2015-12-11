@@ -26,7 +26,7 @@
             --filter '{"milestone": "8.0", "tags": ["area-python", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
             --filter '{"milestone": "8.0", "assignee": "fuel-python", "tags": ["-area-python", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
             --project mos --project fuel --board 'fuel-python high bugs' -v \
-            --use-labels sla1 sla2 swarm-blocker customer-found support tricky low-hanging-fruit tech-debt \
+            --use-labels sla1 sla2 swarm-blocker customer-found support tricky low-hanging-fruit tech-debt swarm-fail-driver \
             --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
             --create-board > artifacts/python-high.log 2>&1 &
 
@@ -34,7 +34,7 @@
             --filter '{"milestone": "8.0", "tags": ["area-python", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Medium", "Low", "Wishlist"], "tags_combinator":"All"}' \
             --filter '{"milestone": "8.0", "assignee": "fuel-python", "tags": ["-area-python", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Medium", "Low", "Wishlist"], "tags_combinator":"All"}' \
             --project mos --project fuel --board 'fuel-python low bugs' -v \
-            --use-labels sla1 sla2 swarm-blocker customer-found support tricky low-hanging-fruit tech-debt \
+            --use-labels sla1 sla2 swarm-blocker customer-found support tricky low-hanging-fruit tech-debt swarm-fail-driver \
             --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
             --create-board > artifacts/python-low.log 2>&1 &
 
@@ -42,7 +42,7 @@
             --filter '{"milestone": "8.0", "tags": ["area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
             --filter '{"milestone": "8.0", "assignee": "fuel-library", "tags": ["-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
             --project mos --project fuel --board 'fuel-library high bugs' -v \
-            --use-labels sla1 sla2 swarm-blocker customer-found support tricky low-hanging-fruit tech-debt \
+            --use-labels sla1 sla2 swarm-blocker customer-found support tricky low-hanging-fruit tech-debt swarm-fail-driver \
             --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
             --create-board > artifacts/library-high.log 2>&1 &
 
@@ -50,7 +50,7 @@
             --filter '{"milestone": "8.0", "tags": ["area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Medium", "Low", "Wishlist"], "tags_combinator":"All"}' \
             --filter '{"milestone": "8.0", "assignee": "fuel-library", "tags": ["-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Medium", "Low", "Wishlist"], "tags_combinator":"All"}' \
             --project mos --project fuel --board 'fuel-library low bugs' -v \
-            --use-labels sla1 sla2 swarm-blocker customer-found support tricky low-hanging-fruit tech-debt \
+            --use-labels sla1 sla2 swarm-blocker customer-found support tricky low-hanging-fruit tech-debt swarm-fail-driver \
             --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
             --create-board > artifacts/library-low.log 2>&1 &
 
@@ -73,5 +73,5 @@
       - timed: H * * * 1-5
     wrappers:
       - timeout:
-          timeout: 1440
+          timeout: 120
           fail: false
