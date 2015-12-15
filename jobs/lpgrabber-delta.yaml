@@ -25,7 +25,7 @@
           venv/bin/lpgrabber bugs fuel -v --outfile artifacts/bugs-fuel-${file_name}.csv --updated-since ${from_date}
           venv/bin/lpgrabber bugs mos -v --outfile artifacts/bugs-mos-${file_name}.csv --updated-since ${from_date}
           venv/bin/lpgrabber teams fuel mos -v --outfile artifacts/teams-${file_name}.csv
-          # reports/build_reports.sh reports artifacts
+          reports/build_reports.sh reports artifacts
     publishers:
       - archive:
           artifacts: artifacts/*
