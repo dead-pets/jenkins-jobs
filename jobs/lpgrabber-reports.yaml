@@ -1,6 +1,6 @@
 - job:
-    name: lpgrabber-delta
-    description: "Import bugs and teams data from Launchpad"
+    name: lpgrabber-reports
+    description: "Generate Launchpad reports"
     logrotate:
       daysToKeep: 30
       numToKeep: 100
@@ -21,18 +21,11 @@
           virtualenv venv
           venv/bin/pip install .
           mkdir -p artifacts
-          venv/bin/lpgrabber bugs fuel -v --outfile artifacts/bugs-fuel-${file_name}.csv --updated-since ${from_date}
-          venv/bin/lpgrabber bugs mos -v --outfile artifacts/bugs-mos-${file_name}.csv --updated-since ${from_date}
-          venv/bin/lpgrabber teams fuel mos -v --outfile artifacts/teams-${file_name}.csv
-          # PATH=venv/bin:$PATH reports/build_reports.sh reports artifacts
+          venv/bin/pip install ipython nbconvert jupyter-client jupyter-core ipykernel matplotlib
+          cd artifacts && ../venv/bin/ipython nbconvert --to=html --template=full --ExecutePreprocessor.enabled=True --ExecutePreprocessor.allow_errors=True ../reports/*.ipynb
     publishers:
       - archive:
           artifacts: artifacts/*
-      - trigger:
-          project: lpgrabber-reports
-          threshold: SUCCESS
-    triggers:
-      - timed: H * * * 1-5
     wrappers:
       - timeout:
           timeout: 1440
