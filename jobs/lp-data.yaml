@@ -1,5 +1,6 @@
 - job:
     name: lp-data
+    disabled: true
     description: "Import 8.0 and teams data from Launchpad"
     logrotate:
       daysToKeep: 30

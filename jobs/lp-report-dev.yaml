@@ -1,5 +1,6 @@
 - job:
     name: lp-report-dev
+    disabled: true
     description: "Build from development version of lp-report: <a href='https://github.com/dmi-try/launchpad-report/tree/dev'>code</a>"
     logrotate:
       daysToKeep: 30

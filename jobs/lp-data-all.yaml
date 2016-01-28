@@ -1,5 +1,6 @@
 - job:
     name: lp-data-all
+    disabled: true
     description: "Import all bugs and teams data from Launchpad"
     logrotate:
       daysToKeep: 30
