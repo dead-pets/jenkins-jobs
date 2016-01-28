@@ -1,0 +1,52 @@
+- job:
+    name: lpgrabber-trellostats
+    description: "Get trello stats"
+    logrotate:
+      daysToKeep: -1
+      numToKeep: -1
+      artifactDaysToKeep: -1
+      artifactNumToKeep: -1
+    scm:
+      - git:
+          url: https://github.com/dmi-try/lpgrabber.git
+          branches:
+            - master
+          skip-tag: true
+          wipe-workspace: false
+    builders:
+      - shell: |
+          #!/bin/bash
+          . ~/.trello_credentials.sh
+          rm -rf artifacts
+          virtualenv venv
+          venv/bin/pip install .
+          mkdir -p artifacts
+          FAILS=0
+          venv/bin/lpgrabber trellostats \
+            --board 'fuel-python high bugs' \
+            --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
+            > artifacts/python-high.log 2>&1
+
+          venv/bin/lpgrabber trellostats \
+            --board 'fuel-python low bugs' \
+            --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
+            > artifacts/python-low.log 2>&1
+
+          venv/bin/lpgrabber trellostats \
+            --board 'fuel-library high bugs' \
+            --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
+            > artifacts/library-high.log 2>&1
+
+          venv/bin/lpgrabber trellostats \
+            --board 'fuel-library low bugs' \
+            --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
+            > artifacts/library-low.log 2>&1
+    publishers:
+      - archive:
+          artifacts: artifacts/*
+    triggers:
+      - timed: H 4 * * *
+    wrappers:
+      - timeout:
+          timeout: 30
+          fail: false
