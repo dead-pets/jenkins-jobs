@@ -16,11 +16,10 @@
     builders:
       - shell: |
           test -f ~/.google_key.p12
-          rm -rf venv
           virtualenv venv
           LC_ALL=C venv/bin/pip install gspread pygerrit oauth2client pyOpenSSL pytz launchpadlib ndg-httpsclient pyasn1 simplejson
           cp ~/.google_key.p12 .
-          venv/bin/python ./report-to-google-docs.py --milestone 8.0 --start-date 2015-09-16 --login
+          venv/bin/python ./report-to-google-docs.py --milestone 9.0 --start-date 2016-02-03 --login
           rm .google_key.p12
     triggers:
       - timed: H */3 * * 1-5
