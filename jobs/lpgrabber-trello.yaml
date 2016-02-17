@@ -58,12 +58,6 @@
             --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
             --create-board > artifacts/library-low.log 2>&1 &
 
-          venv/bin/lpgrabber trello \
-            --filter '{"milestone": "9.0", "tags": ["swarm-blocker"], "tags_combinator":"All"}' \
-            --project mos --project fuel --board 'swarm-blocker bugs' \
-            --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
-            --create-board > artifacts/swarm.log 2>&1 &
-
           for job in `jobs -p`
           do
             echo $job
