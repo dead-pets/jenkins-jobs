@@ -21,7 +21,7 @@
           virtualenv venv
           venv/bin/pip install .
           mkdir -p artifacts
-          venv/bin/pip install ipython nbconvert jupyter-client jupyter-core ipykernel matplotlib
+          venv/bin/pip install ipython nbconvert jupyter-client jupyter-core ipykernel matplotlib numexpr
           cd artifacts && ../venv/bin/ipython nbconvert --to=html --template=full --ExecutePreprocessor.enabled=True --ExecutePreprocessor.allow_errors=True --ExecutePreprocessor.timeout=300 ../reports/*.ipynb
     publishers:
       - archive:
