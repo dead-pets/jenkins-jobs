@@ -21,8 +21,8 @@
           virtualenv venv
           venv/bin/pip install .
           mkdir -p artifacts
-          venv/bin/lpgrabber bugs fuel -v --outfile artifacts/bugs-fuel-${file_name}.csv --updated-since ${from_date}
-          venv/bin/lpgrabber bugs mos -v --outfile artifacts/bugs-mos-${file_name}.csv --updated-since ${from_date}
+          venv/bin/lpgrabber bugs fuel -m 9.0 -v --outfile artifacts/bugs-fuel-${file_name}.csv --updated-since ${from_date}
+          venv/bin/lpgrabber bugs mos -m 9.0 -v --outfile artifacts/bugs-mos-${file_name}.csv --updated-since ${from_date}
           venv/bin/lpgrabber teams fuel mos -v --outfile artifacts/teams-${file_name}.csv
           # PATH=venv/bin:$PATH reports/build_reports.sh reports artifacts
     publishers:

@@ -1,5 +1,5 @@
 - job:
-    name: lpgrabber-all
+    name: lpgrabber-all-8.0
     description: "Import all bugs and teams data from Launchpad"
     logrotate:
       daysToKeep: 30
@@ -20,8 +20,8 @@
           virtualenv venv
           venv/bin/pip install .
           mkdir -p artifacts
-          venv/bin/lpgrabber bugs fuel -m 9.0 -v --outfile artifacts/bugs-fuel-${file_name}.csv
-          venv/bin/lpgrabber bugs mos -m 9.0 -v --outfile artifacts/bugs-mos-${file_name}.csv
+          venv/bin/lpgrabber bugs fuel -m 8.0 -v --outfile artifacts/bugs-fuel-${file_name}.csv
+          venv/bin/lpgrabber bugs mos -m 8.0 -v --outfile artifacts/bugs-mos-${file_name}.csv
           venv/bin/lpgrabber teams fuel mos -v --outfile artifacts/teams-${file_name}.csv
     publishers:
       - archive:

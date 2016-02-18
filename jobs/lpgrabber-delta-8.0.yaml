@@ -1,6 +1,6 @@
 - job:
-    name: lpgrabber-all
-    description: "Import all bugs and teams data from Launchpad"
+    name: lpgrabber-delta-8.0
+    description: "Import bugs and teams data from Launchpad"
     logrotate:
       daysToKeep: 30
       numToKeep: 100
@@ -16,18 +16,22 @@
     builders:
       - shell: |
           file_name=${JOB_NAME}-${BUILD_NUMBER}-$(date '+%Y-%m-%d')
+          from_date=$(date --date="1 day ago" "+%Y-%m-%d")
           rm -rf artifacts
           virtualenv venv
           venv/bin/pip install .
           mkdir -p artifacts
-          venv/bin/lpgrabber bugs fuel -m 9.0 -v --outfile artifacts/bugs-fuel-${file_name}.csv
-          venv/bin/lpgrabber bugs mos -m 9.0 -v --outfile artifacts/bugs-mos-${file_name}.csv
+          venv/bin/lpgrabber bugs fuel -m 8.0 -v --outfile artifacts/bugs-fuel-${file_name}.csv --updated-since ${from_date}
+          venv/bin/lpgrabber bugs mos -m 8.0 -v --outfile artifacts/bugs-mos-${file_name}.csv --updated-since ${from_date}
           venv/bin/lpgrabber teams fuel mos -v --outfile artifacts/teams-${file_name}.csv
     publishers:
       - archive:
           artifacts: artifacts/*
+      - trigger:
+          project: lpgrabber-reports
+          threshold: SUCCESS
     triggers:
-      - timed: H 4,16 * * 1-5
+      - timed: H * * * 1-5
     wrappers:
       - timeout:
           timeout: 1440
