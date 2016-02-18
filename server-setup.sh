@@ -32,3 +32,4 @@ apt-get install default-jre-headless
 
 sudo apt-get install zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+# ZSH_THEME=mortalscumbag
