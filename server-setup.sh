@@ -45,3 +45,6 @@ sudo service docker start
 # Relogin in order to get docker group permissions
 docker run hello-world
 
+sudo apt-get install zsh
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+# ZSH_THEME=mortalscumbag
