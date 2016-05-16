@@ -1,6 +1,7 @@
 - job:
     name: lpgrabber-reports
     description: "Generate Launchpad reports"
+    disabled: true
     logrotate:
       daysToKeep: 30
       numToKeep: 100

@@ -1,6 +1,7 @@
 - job:
     name: lpgrabber-all-9.0
     description: "Import all bugs and teams data from Launchpad"
+    disabled: true
     logrotate:
       daysToKeep: 30
       numToKeep: 100

@@ -1,6 +1,7 @@
 - job:
     name: bugfix-report
     description: Update Google doc with KPI metrics
+    disabled: false
     logrotate:
       daysToKeep: 30
       numToKeep: 100

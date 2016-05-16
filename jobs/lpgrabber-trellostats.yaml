@@ -1,6 +1,7 @@
 - job:
     name: lpgrabber-trellostats
     description: "Get trello stats"
+    disabled: false
     logrotate:
       daysToKeep: -1
       numToKeep: -1
