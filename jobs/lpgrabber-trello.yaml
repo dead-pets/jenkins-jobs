@@ -24,9 +24,9 @@
           mkdir -p artifacts
           FAILS=0
           venv/bin/lpgrabber trello \
-            --filter '{"milestone": "9.0", "tags": ["area-python", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
-            --filter '{"milestone": "9.0", "assignee": "fuel-python", "tags": ["-area-python", "-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
-            --filter '{"milestone": "9.0", "assignee": "fuel-sustaining-team", "tags": ["-area-python", "-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
+            --filter '{"milestone": "10.0", "tags": ["area-python", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
+            --filter '{"milestone": "10.0", "assignee": "fuel-python", "tags": ["-area-python", "-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
+            --filter '{"milestone": "10.0", "assignee": "fuel-sustaining-team", "tags": ["-area-python", "-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
             --project mos --project fuel --board 'fuel-python high bugs' \
             --use-labels sla1 sla2 swarm-blocker customer-found support tricky low-hanging-fruit tech-debt swarm-fail-driver \
             --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
@@ -42,9 +42,9 @@
             --create-board > artifacts/python-low.log 2>&1 &
 
           venv/bin/lpgrabber trello \
-            --filter '{"milestone": "9.0", "tags": ["area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
-            --filter '{"milestone": "9.0", "assignee": "fuel-library", "tags": ["-area-python", "-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
-            --filter '{"milestone": "9.0", "assignee": "fuel-sustaining-team", "tags": ["-area-python", "-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
+            --filter '{"milestone": "10.0", "tags": ["area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
+            --filter '{"milestone": "10.0", "assignee": "fuel-library", "tags": ["-area-python", "-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
+            --filter '{"milestone": "10.0", "assignee": "fuel-sustaining-team", "tags": ["-area-python", "-area-library", "-feature", "-covered-by-bp", "-need-bp"], "importance": ["Critical", "High"], "tags_combinator":"All"}' \
             --project mos --project fuel --board 'fuel-library high bugs' \
             --use-labels sla1 sla2 swarm-blocker customer-found support tricky low-hanging-fruit tech-debt swarm-fail-driver \
             --trello-key ${TRELLO_KEY} --trello-secret ${TRELLO_SECRET} --trello-token ${TRELLO_TOKEN} \
